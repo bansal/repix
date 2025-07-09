@@ -4,12 +4,12 @@ import { logger } from "hono/logger";
 import { serve } from "@hono/node-server";
 import dotenv from "dotenv";
 
-import { loadConfig } from "./config/loader.js";
-import { createImageHandler } from "./handlers/image.js";
-import { createHealthHandler } from "./handlers/health.js";
-import { createPresetHandler } from "./handlers/presets.js";
+import { loadConfig } from "./config/loader";
+import { createImageHandler } from "./handlers/image";
+import { createHealthHandler } from "./handlers/health";
+import { createPresetHandler } from "./handlers/presets";
 
-async function startServer() {
+async function startServer(): Promise<Hono> {
   // Load environment variables
   dotenv.config();
 
@@ -30,20 +30,30 @@ async function startServer() {
     if (err.message.includes("Custom transformations not allowed")) {
       return c.json(
         {
+          service: "Repix",
           error: err.message,
-          hint: "Use GET /presets to see available presets",
+          documentation: "https://github.com/bansal/repix",
         },
         403
       );
     }
 
     if (err.message.includes("Invalid image")) {
-      return c.json({ error: "Invalid image format or corrupted image" }, 400);
+      return c.json(
+        {
+          service: "Repix",
+          error: "Invalid image format or corrupted image",
+        },
+        400
+      );
     }
 
     if (err.message.includes("Image too large")) {
       return c.json(
-        { error: "Image dimensions exceed maximum allowed size" },
+        {
+          service: "Repix",
+          error: "Image dimensions exceed maximum allowed size",
+        },
         413
       );
     }
@@ -52,23 +62,47 @@ async function startServer() {
       err.message.includes("Fetch failed") ||
       err.message.includes("ENOTFOUND")
     ) {
-      return c.json({ error: "Could not fetch source image" }, 404);
+      return c.json(
+        {
+          service: "Repix",
+          error: "Could not fetch source image",
+        },
+        404
+      );
     }
 
     if (err.message.includes("timeout")) {
-      return c.json({ error: "Request timeout while fetching image" }, 408);
+      return c.json(
+        {
+          service: "Repix",
+          error: "Request timeout while fetching image",
+        },
+        408
+      );
     }
 
-    return c.json({ error: "Internal server error" }, 500);
+    return c.json(
+      {
+        service: "Repix",
+        error: "Internal server error",
+      },
+      500
+    );
   });
 
   // Routes
   app.get("/", (c) => {
     return c.json({
-      service: "Image Resize Service",
+      service: "Repix",
       version: "1.0.0",
-      description: "Image transformation service",
-      documentation: "https://github.com/your-repo/image-resize-service",
+      description: "High-performance image transformation service",
+      brand: "Powered by Repix",
+      documentation: "https://github.com/bansal/repix",
+      endpoints: {
+        health: "/health",
+        presets: "/presets",
+        transform: "/images/{preset|params}/{url}",
+      },
     });
   });
 
@@ -84,7 +118,7 @@ async function startServer() {
   // Start server
   const port = config.port || 3000;
 
-  console.log(`🚀 Image Resize Service starting on port ${port}`);
+  console.log(`🚀 Repix Image Transformation Service starting on port ${port}`);
   console.log(
     `📁 Available presets: ${Object.keys(config.presets || {}).join(", ")}`
   );

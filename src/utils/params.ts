@@ -1,11 +1,13 @@
+import type { TransformParams } from "../types/index.js";
+
 /**
  * Parse transformation parameters from URL
  */
 export function parseTransformParams(
-  transform,
-  presets = {},
+  transform: string,
+  presets: Record<string, string> = {},
   allowCustomTransforms = true
-) {
+): TransformParams {
   // Check if it's a preset
   if (presets[transform]) {
     return parseParamString(presets[transform]);
@@ -27,8 +29,8 @@ export function parseTransformParams(
 /**
  * Parse parameter string into object
  */
-function parseParamString(paramString) {
-  const params = {};
+function parseParamString(paramString: string): TransformParams {
+  const params: TransformParams = {};
 
   // Split by comma and parse each parameter
   const pairs = paramString.split(",");
@@ -44,7 +46,7 @@ function parseParamString(paramString) {
     const normalizedValue = normalizeParamValue(value.trim(), normalizedKey);
 
     if (normalizedKey && normalizedValue !== null) {
-      params[normalizedKey] = normalizedValue;
+      (params as any)[normalizedKey] = normalizedValue;
     }
   }
 
@@ -54,8 +56,8 @@ function parseParamString(paramString) {
 /**
  * Normalize parameter keys (handle aliases)
  */
-function normalizeParamKey(key) {
-  const aliases = {
+function normalizeParamKey(key: string): string {
+  const aliases: Record<string, string> = {
     w: "width",
     h: "height",
     q: "quality",
@@ -69,7 +71,7 @@ function normalizeParamKey(key) {
 /**
  * Normalize parameter values based on key
  */
-function normalizeParamValue(value, key) {
+function normalizeParamValue(value: string, key: string): any {
   // Numeric parameters
   if (
     [

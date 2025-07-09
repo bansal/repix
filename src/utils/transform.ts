@@ -1,9 +1,14 @@
 import sharp from "sharp";
+import type { TransformParams, TransformResult } from "../types/index.js";
 
 /**
  * Transform image using Sharp
  */
-export async function transformImage(buffer, params, defaultQuality = 85) {
+export async function transformImage(
+  buffer: Buffer,
+  params: TransformParams,
+  defaultQuality = 85
+): Promise<TransformResult> {
   try {
     let image = sharp(buffer);
 
@@ -30,11 +35,9 @@ export async function transformImage(buffer, params, defaultQuality = 85) {
       if (params.flip === "v" || params.flip === "hv") {
         image = image.flip();
       }
-    }
-
-    // 3. Resize
+    } // 3. Resize
     if (params.width || params.height) {
-      const resizeOptions = {
+      const resizeOptions: sharp.ResizeOptions = {
         width: params.width,
         height: params.height,
         fit: mapFitMode(params.fit || "cover"),
@@ -116,7 +119,7 @@ export async function transformImage(buffer, params, defaultQuality = 85) {
       format: format === "jpg" ? "jpeg" : format,
       info: outputBuffer.info,
     };
-  } catch (error) {
+  } catch (error: any) {
     if (
       error.message.includes("Input file contains unsupported image format")
     ) {
@@ -134,8 +137,8 @@ export async function transformImage(buffer, params, defaultQuality = 85) {
 /**
  * Map fit mode to Sharp's fit options
  */
-function mapFitMode(fit) {
-  const fitMap = {
+function mapFitMode(fit: string): keyof sharp.FitEnum {
+  const fitMap: Record<string, keyof sharp.FitEnum> = {
     cover: "cover",
     contain: "contain",
     "scale-down": "inside",
@@ -149,8 +152,8 @@ function mapFitMode(fit) {
 /**
  * Map gravity to Sharp's position options
  */
-function mapGravity(gravity) {
-  const gravityMap = {
+function mapGravity(gravity: string): string {
+  const gravityMap: Record<string, string> = {
     auto: "attention",
     center: "center",
     centre: "center",
@@ -170,14 +173,19 @@ function mapGravity(gravity) {
 /**
  * Parse color string to Sharp-compatible format
  */
-function parseColor(color) {
+function parseColor(
+  color: string
+): string | { r: number; g: number; b: number; alpha: number } {
   // Handle hex colors
   if (/^#[0-9a-f]{3,6}$/i.test(color)) {
     return color;
   }
 
   // Handle named colors
-  const namedColors = {
+  const namedColors: Record<
+    string,
+    string | { r: number; g: number; b: number; alpha: number }
+  > = {
     white: "#ffffff",
     black: "#000000",
     red: "#ff0000",
@@ -200,7 +208,7 @@ function parseColor(color) {
 /**
  * Get optimal format based on source format and capabilities
  */
-function getOptimalFormat(sourceFormat) {
+function getOptimalFormat(sourceFormat?: string): string {
   // Preserve source format by default, but optimize for web
   switch (sourceFormat) {
     case "jpeg":

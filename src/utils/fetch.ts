@@ -1,7 +1,10 @@
 /**
  * Fetch image from URL with timeout
  */
-export async function fetchImage(url, timeout = 10000) {
+export async function fetchImage(
+  url: string,
+  timeout = 10000
+): Promise<Buffer> {
   try {
     // Validate URL
     new URL(url); // Will throw if invalid
@@ -12,7 +15,7 @@ export async function fetchImage(url, timeout = 10000) {
     const response = await fetch(url, {
       signal: controller.signal,
       headers: {
-        "User-Agent": "Image-Resize-Service/1.0.0",
+        "User-Agent": "Repix/1.0.0",
       },
     });
 
@@ -36,7 +39,7 @@ export async function fetchImage(url, timeout = 10000) {
     }
 
     return Buffer.from(buffer);
-  } catch (error) {
+  } catch (error: any) {
     if (error.name === "AbortError") {
       throw new Error("Request timeout");
     }

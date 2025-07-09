@@ -1,9 +1,13 @@
-# Image Resize Service
+# Repix 🚀
 
-A high-performance image resize service, built with Hono and Sharp.
+**The high-performance image transformation service** - Built with TypeScript, Hono, and Sharp.
 
-## Features
+> Transform, optimize, and deliver images at lightning speed with Repix's powerful API.
 
+## ✨ Features
+
+- **TypeScript**: Full type safety and better development experience
+- **Modern Build**: Vite-powered build system for optimal performance
 - **Image Transformations**: Resize, crop, format conversion, quality adjustment
 - **Multiple Fit Modes**: cover, contain, scale-down, crop, pad
 - **Format Support**: JPEG, PNG, WebP, AVIF
@@ -12,61 +16,76 @@ A high-performance image resize service, built with Hono and Sharp.
 - **Docker Ready**: Containerized deployment support
 - **URL-based API**: Transform images via URL parameters
 
-## Quick Start
+## 🚀 Quick Start
 
-1. Install dependencies:
+1. **Install dependencies:**
 
 ```bash
 npm install
 ```
 
-2. Configure the service:
+2. **Configure the service:**
 
 ```bash
 cp config.example.js config.js
 # Edit config.js with your settings
 ```
 
-3. Start the service:
+3. **Development:**
 
 ```bash
 npm run dev
 ```
 
-## URL Pattern
+4. **Production build:**
 
-Transform images using this URL pattern:
-
+```bash
+npm run build
+npm start
 ```
-https://your-domain.com/images/{preset|rules}/{url-without-prefix}
+
+## 🔧 Development Scripts
+
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build for production
+- `npm start` - Start production server
+- `npm run type-check` - Check TypeScript types
+- `npm test` - Run tests (not implemented yet)
+
+## 📡 URL Pattern
+
+Transform images using Repix's intuitive URL pattern:
+
+```http
+curl https://your-domain.com/images/{preset|rules}/{url-without-prefix}
 ```
 
-### Examples
+### 🎯 Examples
 
-Using presets:
+**Using presets:**
 
-```
+```http
 https://your-domain.com/images/thumbnail/example.com/path/to/image.jpg
 ```
 
-Using direct rules:
+**Using direct rules:**
 
-```
+```http
 https://your-domain.com/images/w=400,h=300,fit=cover/example.com/path/to/image.jpg
 ```
 
-## Configuration
+## ⚙️ Configuration
 
-The service supports configuration via both `config.js` and environment variables. Environment variables override config file settings.
+Repix supports configuration via both `config.js` and environment variables. Environment variables override config file settings.
 
-### Available Options
+### 📋 Available Options
 
 - `prefix`: Source URL prefix (default: 'https://')
 - `port`: Server port (default: 3000)
 - `presets`: Object containing named transformation presets
 - `image.allowCustomTransforms`: Whether to allow custom transformations beyond presets (default: true)
 
-### Security Configuration
+### 🔒 Security Configuration
 
 You can restrict image transformations to only use predefined presets by setting `allowCustomTransforms` to `false`:
 
@@ -87,7 +106,7 @@ export default {
 
 When `allowCustomTransforms` is `false`, users can only use the transformation URLs with predefined preset names. Any attempt to use custom parameters will result in an error.
 
-### Example Configuration
+### 💼 Example Configuration
 
 ```javascript
 export default {
@@ -101,7 +120,7 @@ export default {
 };
 ```
 
-## Transformation Parameters
+## 🎨 Transformation Parameters
 
 | Parameter      | Description              | Example            |
 | -------------- | ------------------------ | ------------------ |
@@ -116,7 +135,7 @@ export default {
 | `flip`         | Flip direction           | `flip=h`           |
 | `background`   | Background color         | `background=white` |
 
-### Fit Modes
+### 📐 Fit Modes
 
 - `cover`: Resize and crop to fill dimensions
 - `contain`: Resize to fit within dimensions
@@ -124,15 +143,30 @@ export default {
 - `crop`: Crop to exact dimensions
 - `pad`: Resize and pad with background color
 
-## Docker
+## 🐳 Docker
 
-Build and run with Docker:
+**Build and run with Docker:**
 
 ```bash
-docker build -t image-resize-service .
-docker run -p 3000:3000 image-resize-service
+docker build -t repix .
+docker run -p 3000:3000 repix
 ```
 
-## License
+## 🚀 Docker & Production Deployment
 
-MIT
+```bash
+# Production deployment with nginx proxy (includes both repix and nginx services)
+docker-compose up -d
+
+# Scale for high traffic (multiple replicas of repix)
+docker-compose up -d --scale repix=3
+```
+
+## 📄 License
+
+MIT License
+
+---
+
+**Repix** - High-performance image transformation service  
+_Made with ❤️ for developers who need fast, reliable image processing_

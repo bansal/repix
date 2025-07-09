@@ -1,9 +1,12 @@
+import type { Handler } from "hono";
+
 /**
  * Health check handler
  */
-export function createHealthHandler() {
+export function createHealthHandler(): Handler {
   return async (c) => {
     return c.json({
+      service: "Repix",
       status: "healthy",
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),

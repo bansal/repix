@@ -1,6 +1,8 @@
-# Image Resize Service Test URLs ✅
+# Repix Image Transformation Service - Test URLs ✅
 
 **Status**: All URLs are now working! The route parameter extraction issue has been fixed.
+
+**Repix** - High-performance image transformation service powered by TypeScript, Hono, and Sharp.
 
 Test image: `https://images.unsplash.com/photo-1749498783004-884cfbba84bf`
 
@@ -76,6 +78,9 @@ Test image: `https://images.unsplash.com/photo-1749498783004-884cfbba84bf`
 
 ### Using Predefined Presets
 
+- **Repix Thumb preset**: [http://localhost:3000/images/repix-thumb/images.unsplash.com/photo-1749498783004-884cfbba84bf](http://localhost:3000/images/repix-thumb/images.unsplash.com/photo-1749498783004-884cfbba84bf)
+- **Repix Banner preset**: [http://localhost:3000/images/repix-banner/images.unsplash.com/photo-1749498783004-884cfbba84bf](http://localhost:3000/images/repix-banner/images.unsplash.com/photo-1749498783004-884cfbba84bf)
+- **Repix Hero preset**: [http://localhost:3000/images/repix-hero/images.unsplash.com/photo-1749498783004-884cfbba84bf](http://localhost:3000/images/repix-hero/images.unsplash.com/photo-1749498783004-884cfbba84bf)
 - **Thumbnail preset**: [http://localhost:3000/images/thumbnail/images.unsplash.com/photo-1749498783004-884cfbba84bf](http://localhost:3000/images/thumbnail/images.unsplash.com/photo-1749498783004-884cfbba84bf)
 - **Banner preset**: [http://localhost:3000/images/banner/images.unsplash.com/photo-1749498783004-884cfbba84bf](http://localhost:3000/images/banner/images.unsplash.com/photo-1749498783004-884cfbba84bf)
 
@@ -114,8 +119,9 @@ To test preset-only functionality:
 
 ## Notes
 
-- Make sure your image resize service is running on `localhost:3000`
+- Make sure your **Repix** image transformation service is running on `localhost:3000`
 - The service needs to have the prefix configured as `https://` to fetch from the source URLs
 - All URLs use the format: `/images/{transformation-params}/{image-path}`
 - Parameters can use aliases: `w` (width), `h` (height), `f` (format), `q` (quality)
 - Supported formats: jpeg, jpg, png, webp, avif
+- **Repix** provides high-performance image transformations with optimized presets

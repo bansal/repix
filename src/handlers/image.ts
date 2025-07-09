@@ -1,3 +1,5 @@
+import type { Handler } from "hono";
+import type { Config } from "../types/index.js";
 import { parseTransformParams } from "../utils/params.js";
 import { fetchImage } from "../utils/fetch.js";
 import { transformImage } from "../utils/transform.js";
@@ -5,7 +7,7 @@ import { transformImage } from "../utils/transform.js";
 /**
  * Main image transformation handler
  */
-export function createImageHandler(config) {
+export function createImageHandler(config: Config): Handler {
   return async (c) => {
     try {
       const { transform } = c.req.param();
@@ -70,6 +72,7 @@ export function createImageHandler(config) {
       c.header("X-Image-Height", info.height.toString());
       c.header("X-Image-Format", format);
       c.header("X-Image-Size", buffer.length.toString());
+      c.header("X-Powered-By", "Repix");
 
       return c.body(buffer);
     } catch (error) {
