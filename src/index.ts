@@ -30,9 +30,7 @@ async function startServer(): Promise<Hono> {
     if (err.message.includes("Custom transformations not allowed")) {
       return c.json(
         {
-          service: "Repix",
           error: err.message,
-          documentation: "https://github.com/bansal/repix",
         },
         403
       );
@@ -41,7 +39,6 @@ async function startServer(): Promise<Hono> {
     if (err.message.includes("Invalid image")) {
       return c.json(
         {
-          service: "Repix",
           error: "Invalid image format or corrupted image",
         },
         400
@@ -51,7 +48,6 @@ async function startServer(): Promise<Hono> {
     if (err.message.includes("Image too large")) {
       return c.json(
         {
-          service: "Repix",
           error: "Image dimensions exceed maximum allowed size",
         },
         413
@@ -64,7 +60,6 @@ async function startServer(): Promise<Hono> {
     ) {
       return c.json(
         {
-          service: "Repix",
           error: "Could not fetch source image",
         },
         404
@@ -74,7 +69,6 @@ async function startServer(): Promise<Hono> {
     if (err.message.includes("timeout")) {
       return c.json(
         {
-          service: "Repix",
           error: "Request timeout while fetching image",
         },
         408
@@ -83,7 +77,6 @@ async function startServer(): Promise<Hono> {
 
     return c.json(
       {
-        service: "Repix",
         error: "Internal server error",
       },
       500
@@ -95,8 +88,6 @@ async function startServer(): Promise<Hono> {
     return c.json({
       service: "Repix",
       version: "1.0.0",
-      description: "High-performance image transformation service",
-      brand: "Powered by Repix",
       documentation: "https://github.com/bansal/repix",
       endpoints: {
         health: "/health",
