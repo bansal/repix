@@ -65,16 +65,18 @@ export function createImageHandler(config: Config): Handler {
         config.image.defaultQuality
       );
 
-      // Set response headers
-      c.header("Content-Type", `image/${format}`);
-      c.header("Cache-Control", config.image.cacheControl);
-      c.header("X-Image-Width", info.width.toString());
-      c.header("X-Image-Height", info.height.toString());
-      c.header("X-Image-Format", format);
-      c.header("X-Image-Size", buffer.length.toString());
-      c.header("X-Powered-By", "Repix");
-
-      return c.body(buffer);
+      // Return binary response with headers
+      return new Response(new Uint8Array(buffer), {
+        headers: {
+          "Content-Type": `image/${format}`,
+          "Cache-Control": config.image.cacheControl,
+          "X-Image-Width": info.width.toString(),
+          "X-Image-Height": info.height.toString(),
+          "X-Image-Format": format,
+          "X-Image-Size": buffer.length.toString(),
+          "X-Powered-By": "Repix",
+        },
+      });
     } catch (error) {
       console.error("Image processing error:", error);
       throw error; // Will be caught by the error handler

@@ -30,7 +30,7 @@ export default defineConfig({
         format: "es",
       },
     },
-    target: "node18",
+    target: "node22",
     ssr: true,
     minify: false,
   },
@@ -41,6 +41,6 @@ export default defineConfig({
   },
   esbuild: {
     platform: "node",
-    target: "node18",
+    target: "node22",
   },
 });
