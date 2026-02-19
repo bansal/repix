@@ -1,0 +1,19 @@
+# Cloudflare Containers - wrangler deploy
+# Beta: https://developers.cloudflare.com/containers/
+
+name = "repix"
+main = "worker/index.ts"
+compatibility_date = "2025-01-01"
+
+[[containers]]
+class_name = "RepixContainer"
+image = "./Dockerfile"
+max_instances = 10
+
+[[durable_objects.bindings]]
+name = "REPIX"
+class_name = "RepixContainer"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["RepixContainer"]

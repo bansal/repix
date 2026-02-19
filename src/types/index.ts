@@ -10,6 +10,8 @@ export interface ImageConfig {
   fetchTimeout: number;
   cacheControl: string;
   allowCustomTransforms?: boolean;
+  allowDefaultPresets?: boolean;
+  allowOriginalImage?: boolean;
 }
 
 export interface Config {

@@ -1,10 +1,15 @@
+export interface FetchImageResult {
+  buffer: Buffer;
+  contentType: string;
+}
+
 /**
  * Fetch image from URL with timeout
  */
 export async function fetchImage(
   url: string,
   timeout = 10000
-): Promise<Buffer> {
+): Promise<FetchImageResult> {
   try {
     // Validate URL
     new URL(url); // Will throw if invalid
@@ -38,7 +43,10 @@ export async function fetchImage(
       throw new Error("Invalid image: Empty response");
     }
 
-    return Buffer.from(buffer);
+    return {
+      buffer: Buffer.from(buffer),
+      contentType: contentType.split(";")[0].trim(),
+    };
   } catch (error: any) {
     if (error.name === "AbortError") {
       throw new Error("Request timeout");

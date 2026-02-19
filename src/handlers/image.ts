@@ -15,8 +15,8 @@ export function createImageHandler(config: Config): Handler {
       // Extract path manually from URL since Hono wildcard doesn't work as expected
       const url = new URL(c.req.url);
       const pathParts = url.pathname.split("/");
-      // Remove empty, 'images', and transform parts to get the image path
-      const imagePath = pathParts.slice(3).join("/"); // Skip '', 'images', and transform
+      // Remove empty and transform parts to get the image path
+      const imagePath = pathParts.slice(2).join("/"); // Skip '' and transform
 
       if (!transform || !imagePath) {
         return c.json(
@@ -26,6 +26,30 @@ export function createImageHandler(config: Config): Handler {
       }
 
       const path = imagePath;
+
+      // /original/{path} - serve image directly without Sharp processing
+      if (transform === "original") {
+        if (config.image.allowOriginalImage === false) {
+          return c.json(
+            { error: "Original image serving is disabled" },
+            403
+          );
+        }
+
+        const sourceUrl = `${config.prefix}${path}`;
+        const { buffer, contentType } = await fetchImage(
+          sourceUrl,
+          config.image.fetchTimeout
+        );
+
+        return new Response(new Uint8Array(buffer), {
+          headers: {
+            "Content-Type": contentType,
+            "Cache-Control": config.image.cacheControl,
+            "X-Powered-By": "Repix",
+          },
+        });
+      }
 
       // Parse transformation parameters
       const params = parseTransformParams(
@@ -53,7 +77,7 @@ export function createImageHandler(config: Config): Handler {
       const sourceUrl = `${config.prefix}${path}`;
 
       // Fetch source image
-      const imageBuffer = await fetchImage(
+      const { buffer: imageBuffer } = await fetchImage(
         sourceUrl,
         config.image.fetchTimeout
       );

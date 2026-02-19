@@ -92,7 +92,8 @@ async function startServer(): Promise<Hono> {
       endpoints: {
         health: "/health",
         presets: "/presets",
-        transform: "/images/{preset|params}/{url}",
+        transform: "/{preset|params}/{url}",
+        original: "/original/{url}",
       },
     });
   });
@@ -104,20 +105,25 @@ async function startServer(): Promise<Hono> {
   app.get("/presets", createPresetHandler(config));
 
   // Main image transformation endpoint
-  app.get("/images/:transform/*", createImageHandler(config));
+  app.get("/:transform/*", createImageHandler(config));
 
   // Start server
-  const port = config.port || 3000;
+  const port = config.port ?? 3210;
 
-  console.log(`🚀 Repix Image Transformation Service starting on port ${port}`);
+  console.log(`Repix Image Transformation Service starting on port ${port} http://localhost:${port}`);
   console.log(
-    `📁 Available presets: ${Object.keys(config.presets || {}).join(", ")}`
+    `Available presets: ${Object.keys(config.presets || {}).join(", ")}`
   );
   console.log(
-    `🔧 Custom transformations: ${
+    `Custom transformations: ${
       config.image?.allowCustomTransforms !== false
         ? "enabled"
         : "disabled (presets only)"
+    }`
+  );
+  console.log(
+    `Original image serving: ${
+      config.image?.allowOriginalImage !== false ? "enabled" : "disabled"
     }`
   );
 

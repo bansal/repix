@@ -23,7 +23,7 @@ export async function loadConfig(): Promise<Config> {
     } catch (error) {
       console.warn(
         "Warning: Could not load config.js:",
-        (error as Error).message
+        (error as Error).message,
       );
     }
   }
@@ -39,10 +39,10 @@ export async function loadConfig(): Promise<Config> {
     image: {
       maxWidth: process.env.MAX_WIDTH
         ? parseInt(process.env.MAX_WIDTH, 10)
-        : 4096,
+        : 2048,
       maxHeight: process.env.MAX_HEIGHT
         ? parseInt(process.env.MAX_HEIGHT, 10)
-        : 4096,
+        : 2048,
       defaultQuality: process.env.DEFAULT_QUALITY
         ? parseInt(process.env.DEFAULT_QUALITY, 10)
         : 85,
@@ -52,6 +52,8 @@ export async function loadConfig(): Promise<Config> {
       cacheControl:
         process.env.CACHE_CONTROL || "public, max-age=31536000, immutable",
       allowCustomTransforms: process.env.ALLOW_CUSTOM_TRANSFORMS !== "false",
+      allowDefaultPresets: process.env.ALLOW_DEFAULT_PRESETS !== "false",
+      allowOriginalImage: process.env.ALLOW_ORIGINAL_IMAGE !== "false",
     },
   };
 
@@ -62,7 +64,7 @@ export async function loadConfig(): Promise<Config> {
     } catch (error) {
       console.warn(
         "Warning: Could not parse PRESETS environment variable:",
-        (error as Error).message
+        (error as Error).message,
       );
     }
   }
@@ -73,18 +75,20 @@ export async function loadConfig(): Promise<Config> {
   // Set defaults for required fields
   const defaultConfig: Config = {
     prefix: "https://",
-    port: 3000,
+    port: 3210,
     cors: {
       origin: "*",
       credentials: false,
     },
     image: {
-      maxWidth: 4096,
-      maxHeight: 4096,
+      maxWidth: 2048,
+      maxHeight: 2048,
       defaultQuality: 85,
       fetchTimeout: 10000,
       cacheControl: "public, max-age=31536000, immutable",
       allowCustomTransforms: true,
+      allowDefaultPresets: true,
+      allowOriginalImage: true,
     },
     presets: {},
   };

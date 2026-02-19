@@ -6,7 +6,7 @@ import type { Config } from "../types/index.js";
  */
 export function createPresetHandler(config: Config): Handler {
   return async (c) => {
-    const presets = config.presets || {};
+    const presets = config.image.allowDefaultPresets ? config.presets : {};
     const allowCustomTransforms = config.image?.allowCustomTransforms !== false;
 
     return c.json({

@@ -86,3 +86,6 @@ jspm_packages/
 # OS
 .DS_Store
 Thumbs.db
+
+.data
+.output
