@@ -1,20 +1,10 @@
 # Repix
 
+Open source alternative to Cloudinary, imgix, ImageKit, etc.
+
 **The high-performance image transformation service** - Built with TypeScript, Hono, and Sharp.
 
 > Transform, optimize, and deliver images at lightning speed with Repix's powerful API.
-
-## Features
-
-- **TypeScript**: Full type safety and better development experience
-- **Modern Build**: Vite-powered build system for optimal performance
-- **Image Transformations**: Resize, crop, format conversion, quality adjustment
-- **Multiple Fit Modes**: cover, contain, scale-down, crop, pad
-- **Format Support**: JPEG, PNG, WebP, AVIF
-- **Preset System**: Define reusable transformation presets
-- **Environment Configuration**: Support for both config file and environment variables
-- **Docker Ready**: Containerized deployment support
-- **URL-based API**: Transform images via URL parameters
 
 ## Quick Start
 
@@ -31,32 +21,11 @@ cp config.example.js config.js
 # Edit config.js with your settings
 ```
 
-3. **Development:**
-
-```bash
-npm run dev
-```
-
-4. **Production build:**
-
-```bash
-npm run build
-npm start
-```
-
-## Development Scripts
-
-- `npm run dev` - Start development server with hot reload
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm run type-check` - Check TypeScript types
-- `npm test` - Run tests (not implemented yet)
-
 ## URL Pattern
 
 Transform images using Repix's intuitive URL pattern:
 
-```http
+```sh
 curl https://your-domain.com/{preset|rules}/{url-without-prefix}
 ```
 
@@ -64,13 +33,13 @@ curl https://your-domain.com/{preset|rules}/{url-without-prefix}
 
 **Using presets:**
 
-```http
+```sh
 https://your-domain.com/sm/example.com/path/to/image.jpg
 ```
 
 **Using direct rules:**
 
-```http
+```sh
 https://your-domain.com/w=400,h=300,fit=cover/example.com/path/to/image.jpg
 ```
 
@@ -81,7 +50,6 @@ Repix supports configuration via both `config.js` and environment variables. Env
 ### Available Options
 
 - `prefix`: Source URL prefix (default: 'https://')
-- `port`: Server port (default: 3210, override via `PORT` env or config)
 - `presets`: Object containing named transformation presets
 - `image.allowCustomTransforms`: Whether to allow custom transformations beyond presets (default: true)
 
@@ -150,12 +118,6 @@ docker compose up -d
 
 Or `docker build -t repix . && docker run -p 3210:3210 repix`
 
-## Deploy
-
-- **Fly.io**: `fly launch` → `fly deploy`
-- **Railway / Render / DigitalOcean**: Connect repo, select Docker
-- **Cloudflare Containers**: `npm run cf:deploy` (beta, June 2025+)
-
 ## Note
 
 - Make sure your **Repix** image transformation service is running on `localhost:3210`
@@ -171,8 +133,3 @@ Built by **[Jiten Bansal](https://bansal.io)**.
 ## License
 
 MIT License
-
----
-
-**Repix** - High-performance image transformation service  
-_Made with love for developers who need fast, reliable image processing_
