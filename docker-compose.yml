@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  repix:
+    build: .
+    ports:
+      - "${PORT:-3210}:3210"
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - PORT=3210
+      - SOURCE_PREFIX=${SOURCE_PREFIX:-https://}
+      - FETCH_TIMEOUT=${FETCH_TIMEOUT:-10000}
+      - CACHE_CONTROL=${CACHE_CONTROL:-public, max-age=31536000, immutable}
+      - CORS_ORIGIN=${CORS_ORIGIN:-*}
+      - CORS_CREDENTIALS=${CORS_CREDENTIALS:-false}
+      - ALLOW_PRESETS=${ALLOW_PRESETS:-true}
+      - ALLOW_CUSTOM_TRANSFORMS=${ALLOW_CUSTOM_TRANSFORMS:-true}
+      - ALLOW_ORIGINAL_IMAGE=${ALLOW_ORIGINAL_IMAGE:-true}
+      - IMAGE_MAX_WIDTH=${IMAGE_MAX_WIDTH:-2048}
+      - IMAGE_MAX_HEIGHT=${IMAGE_MAX_HEIGHT:-2048}
+      - IMAGE_DEFAULT_QUALITY=${IMAGE_DEFAULT_QUALITY:-85}
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:3210/health"]
+      interval: 30s
+      retries: 3
