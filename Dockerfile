@@ -48,7 +48,8 @@ USER repix
 
 EXPOSE 3210
 
+# Use PORT env (Railway injects 8080; Render/local use 3210)
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget -q -O /dev/null http://localhost:3210/health || exit 1
+  CMD sh -c 'wget -q -O /dev/null "http://localhost:${PORT:-3210}/health" || exit 1'
 
 CMD ["node", "dist/index.js"]
