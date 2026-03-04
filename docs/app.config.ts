@@ -1,4 +1,7 @@
 export default defineAppConfig({
+  ui: {
+    primary: "fuchsia",
+  },
   docus: {
     title: "Repix",
     description:

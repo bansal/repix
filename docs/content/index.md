@@ -33,6 +33,18 @@ Self-hosted image transformation service. Resize, crop, and convert images on-th
   ---
   View on GitHub
   :::
+
+  :::u-button
+  ---
+  color: neutral
+  icon: simple-icons-railway
+  size: xl
+  to: https://railway.com/deploy/repix?referralCode=14VXYW&utm_medium=integration&utm_source=template&utm_campaign=generic
+  variant: outline
+  target: _blank
+  ---
+  Deploy on Railway
+  :::
 ::
 
 ::u-page-section
@@ -94,16 +106,30 @@ Features
   #description
   Configurable dimension limits, fetch timeouts, and preset-only mode to prevent abuse.
   :::
+
+  :::u-page-feature
+  ---
+  icon: i-lucide-scroll-text
+  ---
+  #title
+  Logging
+
+  #description
+  Structured request logging. Optional OTLP drain for PostHog, Datadog, or any OTLP-compatible backend.
+  :::
 ::
 
 ::u-page-section
+---
+orientation: horizontal
+---
 #title
 Default Presets
 
 #description
 General-purpose presets with incremental sizes for various use cases—icons, thumbnails, cards, galleries, hero images, and more. Use them out of the box or override with custom presets via the `PRESETS` env var.
 
-#body
+#default
 | Preset | Value        | Use case |
 | ------ | ------------ | -------- |
 | `xs`   | `w=64,q=85`  | Icons, favicons |
@@ -115,27 +141,28 @@ General-purpose presets with incremental sizes for various use cases—icons, th
 ::
 
 ::u-page-section
+---
+orientation: horizontal
+---
+
 #title
 FAQ
 
 #description
 Frequently asked questions about Repix.
 
-#body
-### How do I hide my image hosting domain?
-
+#default
+::accordion
+:::accordion-item{label="How do I hide my image hosting domain?"}
 Deploy Repix on your own domain (e.g. `img.yourdomain.com`). All image URLs will show your Repix domain—users see `https://img.yourdomain.com/sm/path/to/image.jpg`, not your S3, R2, or CDN origin. The source URL lives in the path, but the browser address bar and referrer show only your domain. Your storage backend stays hidden.
-
-### How do I prevent abuse?
-
+:::
+:::accordion-item{label="How do I prevent abuse?"}
 Use several controls together: set `ALLOW_CUSTOM_TRANSFORMS=false` and define presets in `PRESETS` so only allowed transformations work. Lower `IMAGE_MAX_WIDTH` and `IMAGE_MAX_HEIGHT` (e.g. 1024) to cap output size. Reduce `FETCH_TIMEOUT` for slow or abusive origins. Set `ALLOW_ORIGINAL_IMAGE=false` to block unprocessed passthrough. Optionally restrict `CORS_ORIGIN` to your app's domain.
-
-### How do I make URLs clean?
-
+:::
+:::accordion-item{label="How do I make URLs clean?"}
 Use presets instead of inline parameters. Compare `https://img.yourdomain.com/sm/example.com/photo.jpg` (clean) vs `https://img.yourdomain.com/w=128,q=85/example.com/photo.jpg` (verbose). Define short preset names in `PRESETS` for your common sizes and fits—e.g. `thumb`, `card`, `hero`—and use those in URLs.
-
-### I have many presets—how do I manage them?
-
+:::
+:::accordion-item{label="I have many presets—how do I manage them?"}
 Repix uses the `PRESETS` env var (JSON). Put it in `.env` for easier editing. For many presets, use a single-line JSON string or build it from a script:
 
 ```bash
@@ -144,8 +171,9 @@ PRESETS='{"thumb":"w=200,h=200,fit=cover","card":"w=400,h=300,fit=cover","hero":
 ```
 
 You can also keep a `presets.json` file and inject it: `PRESETS=$(cat presets.json)` before starting the server.
-
-### Can I use multiple image sources?
-
+:::
+:::accordion-item{label="Can I use multiple image sources?"}
 Yes. Repix fetches from any publicly accessible HTTPS URL. Use different domains in the path for each request: `https://img.yourdomain.com/sm/cdn1.com/photo.jpg` and `https://img.yourdomain.com/sm/bucket.s3.amazonaws.com/other.png` both work. `SOURCE_PREFIX` (default `https://`) is prepended to the path, so you can mix S3, R2, your CDN, and other origins in the same Repix instance. To restrict which origins are allowed, set `SOURCE_HOSTNAME` to a comma-separated list (e.g. `cdn.example.com,images.example.com`); when set, only those hostnames are accepted.
+:::
+::
 ::
