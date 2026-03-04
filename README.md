@@ -4,7 +4,7 @@ Self-hosted image transformation service. Resize, crop, and convert images on-th
 
 **[Documentation →](https://repix.bansal.io)**
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/mapw8G?referralCode=14VXYW&utm_medium=integration&utm_source=template&utm_campaign=generic)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/repix?referralCode=14VXYW&utm_medium=integration&utm_source=template&utm_campaign=generic)
 
 ## What it does
 
