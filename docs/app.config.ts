@@ -16,4 +16,7 @@ export default defineAppConfig({
     url: "https://github.com/bansal/repix",
     branch: "main",
   },
+  socials: {
+    x: "https://x.com/bansal_io",
+  },
 });
