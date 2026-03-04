@@ -51,7 +51,7 @@ Repix is Docker-ready and can be deployed to any platform that supports containe
 
 ## Prerequisites
 
-Repix includes a production-ready `Dockerfile` that:
+Repix includes a `Dockerfile` that:
 
 - Uses multi-stage build for minimal image size
 - Includes Sharp's native dependencies (libvips)

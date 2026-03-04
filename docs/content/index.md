@@ -1,7 +1,7 @@
 ---
 seo:
-  title: Repix - High-Performance Image Transformation Service
-  description: Transform, optimize, and deliver images at lightning speed with Repix's powerful URL-based API. Built with TypeScript, Hono, and Sharp.
+  title: Repix - Self-Hosted Image Transformation Service
+  description: Self-hosted image transformation. Resize, crop, and convert images on-the-fly via URL. Built with TypeScript, Hono, and Sharp.
 ---
 
 ::u-page-hero
@@ -9,7 +9,7 @@ seo:
 Repix
 
 #description
-The high-performance image transformation service. Transform, optimize, and deliver images at lightning speed with Repix's powerful URL-based API.
+Self-hosted image transformation service. Resize, crop, and convert images on-the-fly via URL. No SDK required.
 
 #links
   :::u-button
@@ -37,7 +37,7 @@ The high-performance image transformation service. Transform, optimize, and deli
 
 ::u-page-section
 #title
-Built for developers
+Features
 
 #features
   :::u-page-feature
@@ -46,7 +46,7 @@ Built for developers
   ---
   #title
   URL-based API
-  
+
   #description
   Transform images via intuitive URL patterns. No SDK required—just construct URLs with presets or inline parameters.
   :::
@@ -57,7 +57,7 @@ Built for developers
   ---
   #title
   Modern Formats
-  
+
   #description
   Full support for JPEG, PNG, WebP, and AVIF. Automatic format conversion with quality optimization.
   :::
@@ -68,7 +68,7 @@ Built for developers
   ---
   #title
   Preset System
-  
+
   #description
   General-purpose presets with incremental sizes (xs 64px → xl 1024px → full) for icons, thumbnails, cards, galleries, and more. Define custom presets or restrict to presets for security.
   :::
@@ -79,9 +79,9 @@ Built for developers
   ---
   #title
   Docker Ready
-  
+
   #description
-  Containerized deployment with production-grade Dockerfile. Deploy to Render, Railway, Fly.io, or Cloudflare.
+  Multi-stage Dockerfile. Deploy to Render, Railway, Fly.io, or Cloudflare.
   :::
 
   :::u-page-feature
@@ -90,20 +90,9 @@ Built for developers
   ---
   #title
   Secure by Default
-  
+
   #description
   Configurable dimension limits, fetch timeouts, and preset-only mode to prevent abuse.
-  :::
-
-  :::u-page-feature
-  ---
-  icon: i-lucide-gauge
-  ---
-  #title
-  High Performance
-  
-  #description
-  Built with Hono and Sharp for blazing-fast image processing. Vite-powered build for optimal output.
   :::
 ::
 
