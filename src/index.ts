@@ -46,6 +46,7 @@ async function startServer(): Promise<Hono<AppBindings>> {
   serve({
     fetch: app.fetch,
     port,
+    hostname: process.env.HOST ?? "0.0.0.0", // required for Railway/Render – must accept external connections
   });
 
   return app;
