@@ -49,6 +49,7 @@ describe("loadConfig", () => {
       defaultQuality: 85,
     });
     expect(Object.keys(config.presets).length).toBeGreaterThan(0);
+    expect(config.presets).toHaveProperty("placeholder", "w=64,q=50,blur=15");
   });
 
   it("overrides prefix from env", async () => {

@@ -138,6 +138,7 @@ General-purpose presets with incremental sizes for various use cases—icons, th
 | `lg`   | `w=512,q=85` | Gallery, detail views |
 | `xl`   | `w=1024,q=85`| Hero images, lightbox |
 | `full` | `q=85`      | Unresized, quality-only |
+| `placeholder` | `w=64,q=50,blur=15` | Low-quality image placeholder (LQIP) |
 ::
 
 ::u-page-section

@@ -35,6 +35,7 @@ const defaultConfig: Config = {
     lg: "w=512,q=85",
     xl: "w=1024,q=85",
     full: "q=85",
+    placeholder: "w=64,q=50,blur=15",
   },
 
   // Image processing settings
